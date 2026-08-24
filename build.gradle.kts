@@ -1,0 +1,32 @@
+import com.flixclusive.gradle.util.android
+import com.flixclusive.gradle.util.flxProvider
+
+plugins {
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.flixclusive.provider) apply false
+}
+
+subprojects {
+    apply(plugin = "flx-provider")
+
+    android {
+        compileSdk = 36
+        defaultConfig {
+            minSdk = 23
+            testOptions.targetSdk = 36
+        }
+    }
+
+    flxProvider {
+        author(
+            name = "j97970293-lang",
+            image = "https://github.com/j97970293-lang.png",
+            socialLink = "https://github.com/j97970293-lang",
+        )
+        setRepository("https://github.com/j97970293-lang/flixclusive-french-providers")
+    }
+}
+
+tasks.register<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
+}
