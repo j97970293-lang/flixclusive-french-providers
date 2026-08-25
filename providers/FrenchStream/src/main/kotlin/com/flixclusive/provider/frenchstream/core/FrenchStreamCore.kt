@@ -102,7 +102,7 @@ internal object FrenchStreamParser {
     fun cards(document: org.jsoup.nodes.Document, baseUrl: String, providerId: String): List<FrenchCard> {
         return document.select("div.short, article, .short-item, .movie-item").mapNotNull { element ->
             card(element, baseUrl)
-        }.distinctBy { if (it.isSeries) "s:${normalize(it.title)}" else "m:${it.url}" }
+        }.distinctBy { it.url.trim().lowercase(Locale.ROOT) }
     }
 
     fun card(element: Element, baseUrl: String): FrenchCard? {

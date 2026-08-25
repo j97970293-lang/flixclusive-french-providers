@@ -25,7 +25,7 @@ internal class FrenchStreamCatalogApi(
         Catalog(name = "Séries Disney+", url = "s-tv/series-disney-plus", canPaginate = true, providerId = providerId),
     )
 
-    override suspend fun getCatalogs(): List<Catalog> = catalogs
+    override suspend fun getCatalogs(): List<Catalog> = catalogs.distinctBy { it.url.trim().lowercase() }
 
     override suspend fun getCatalogItems(
         catalog: Catalog,
@@ -44,7 +44,7 @@ internal class FrenchStreamCatalogApi(
                 type = if (card.isSeries) MediaType.SHOW else MediaType.MOVIE,
                 homePage = card.url,
             )
-        }
+        }.distinctBy { it.homePage ?: it.id }
         return PaginatedMedia(
             page = page,
             hasNextPage = results.isNotEmpty(),

@@ -34,7 +34,7 @@ internal class FrenchStreamSearchApi(
                 type = if (card.isSeries) MediaType.SHOW else MediaType.MOVIE,
                 homePage = card.url,
             )
-        }
+        }.distinctBy { it.homePage ?: it.id }
         return PaginatedMedia(
             page = page,
             hasNextPage = results.isNotEmpty(),
